@@ -1,16 +1,15 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
+	"fmt"
+	"math/rand"
 	"os"
 
 	"github.com/spf13/cobra"
 )
-
-
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -24,7 +23,36 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println(Generate(8))
+	},
+}
+
+func Generate(length int) string {
+	set := CreateCharacterSet(true, true, true)
+	pwd := make([]byte, length)
+	for i := range pwd {
+		pwd[i] = set[rand.Intn(len(set))]
+	}
+	return string(pwd)
+}
+func CreateCharacterSet(uppercase bool, specials bool, numbers bool) []byte {
+	const lowercaseString string = "abcdefghijklmnopqrstuvwxyz"
+	const uppercaseString string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	const SpecialsString string = "!@#$%^&*()_+-=[]{}\\|;':\",.<>/?`~"
+	const numbersString string = "0123456789"
+	characterset := lowercaseString
+	if uppercase {
+		characterset += uppercaseString
+	}
+	if specials {
+		characterset += SpecialsString
+	}
+	if numbers {
+		characterset += numbersString
+	}
+	set := []byte(characterset)
+	return set
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -47,5 +75,3 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-
