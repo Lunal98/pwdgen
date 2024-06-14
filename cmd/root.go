@@ -5,9 +5,10 @@ package cmd
 
 import (
 	"fmt"
-	"math/rand"
+
 	"os"
 
+	"github.com/Lunal98/pwdgen/internal/generator"
 	"github.com/spf13/cobra"
 )
 
@@ -24,35 +25,8 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(Generate(8))
+		fmt.Println(generator.Generate(12, string(generator.CreateCharacterSet(true, true, true))))
 	},
-}
-
-func Generate(length int) string {
-	set := CreateCharacterSet(true, true, true)
-	pwd := make([]byte, length)
-	for i := range pwd {
-		pwd[i] = set[rand.Intn(len(set))]
-	}
-	return string(pwd)
-}
-func CreateCharacterSet(uppercase bool, specials bool, numbers bool) []byte {
-	const lowercaseString string = "abcdefghijklmnopqrstuvwxyz"
-	const uppercaseString string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	const SpecialsString string = "!@#$%^&*()_+-=[]{}\\|;':\",.<>/?`~"
-	const numbersString string = "0123456789"
-	characterset := lowercaseString
-	if uppercase {
-		characterset += uppercaseString
-	}
-	if specials {
-		characterset += SpecialsString
-	}
-	if numbers {
-		characterset += numbersString
-	}
-	set := []byte(characterset)
-	return set
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
