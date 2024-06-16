@@ -12,6 +12,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	length    int
+	pwdnumber int
+)
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "pwdgen",
@@ -25,7 +30,10 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(generator.Generate(12, string(generator.CreateCharacterSet(true, true, true))))
+		for i := 0; i < pwdnumber; i++ {
+			fmt.Println(generator.Generate(length, string(generator.CreateCharacterSet(true, true, true))))
+		}
+
 	},
 }
 
@@ -48,4 +56,7 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.Flags().IntVarP(&length, "length", "l", 12, "Set the length of password(s)")
+	rootCmd.Flags().IntVarP(&pwdnumber, "number", "n", 1, "Number of passwords to generate")
+
 }
