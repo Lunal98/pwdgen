@@ -68,6 +68,6 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	rootCmd.Flags().IntVarP(&length, "length", "l", 12, "Set the length of password(s)")
-	rootCmd.Flags().IntVarP(&pwdnumber, "number", "n", 1, "Number of passwords to generate")
+	rootCmd.Flags().IntVarP(&pwdnumber, "count", "c", 1, "Number of passwords to generate")
 
 }
