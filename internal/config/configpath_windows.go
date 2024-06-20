@@ -19,3 +19,4 @@ limitations under the License.
 package YamlConfig
 
 const configpath = "%APPDATA%\\pwdgen"
+const delimiter = "\\"

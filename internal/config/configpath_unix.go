@@ -18,4 +18,4 @@ limitations under the License.
 
 package YamlConfig
 
-const configpath = "~/.config/pwdgen"
+const configpath = "$HOME/.config/pwdgen"

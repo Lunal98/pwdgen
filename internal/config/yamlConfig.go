@@ -34,9 +34,10 @@ func readConfig() {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			// Config file not found; ignore error if desired
 			log.Warn().Str("config file", viper.ConfigFileUsed()).Msg("no config found, creating config file")
-			err := viper.WriteConfig()
+			//err := viper.WriteConfigAs(fmt.Sprintf("%s%s%s", configpath, delimiter, filename))
+			err := viper.SafeWriteConfig()
 			if err != nil {
-				log.Fatal().Err(err)
+				log.Fatal().Err(err).Msg("file creation failed")
 			}
 		} else {
 			log.Error().Err(err).Msg("Config file was found but another error was produced")
