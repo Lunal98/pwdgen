@@ -17,7 +17,6 @@ package cmd
 
 import (
 	"fmt"
-
 	"os"
 
 	YamlConfig "github.com/Lunal98/pwdgen/internal/config"
@@ -41,10 +40,10 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		pwdnumber := viper.GetInt("count")
-
+		alphanumeric := viper.GetBool("alphanumeric")
 		length := viper.GetInt("length")
 		for i := 0; i < pwdnumber; i++ {
-			fmt.Println(generator.Generate(length, string(generator.CreateCharacterSet(true, true, true))))
+			fmt.Println(generator.Generate(length, string(generator.CreateCharacterSet(true, !alphanumeric, true))))
 		}
 
 	},
@@ -75,6 +74,8 @@ func init() {
 	viper.BindPFlag("length", rootCmd.Flags().Lookup("length"))
 	rootCmd.Flags().IntP("count", "c", 2, "Number of passwords to generate")
 	viper.BindPFlag("count", rootCmd.Flags().Lookup("count"))
+	rootCmd.Flags().BoolP("alphanumeric", "a", false, "Use only Alphanumeric charaters (no special symbols)")
+	viper.BindPFlag("alphanumeric", rootCmd.Flags().Lookup("alphanumeric"))
 	/*
 	   rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	   rootCmd.Flags().IntVarP(&length, "length", "l", 12, "Set the length of password(s)")
