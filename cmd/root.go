@@ -28,13 +28,8 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "pwdgen",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Golang CLI random password generator tool",
+	Long:  `pwdgen is a random password generator tool, written in Golang.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
@@ -69,10 +64,9 @@ func init() {
 
 	YamlConfig.Setup()
 
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	rootCmd.Flags().IntP("length", "l", 24, "Set the length of password(s)")
+	rootCmd.Flags().IntP("length", "l", 16, "Set the length of password(s)")
 	viper.BindPFlag("length", rootCmd.Flags().Lookup("length"))
-	rootCmd.Flags().IntP("count", "c", 2, "Number of passwords to generate")
+	rootCmd.Flags().IntP("count", "c", 1, "Number of passwords to generate")
 	viper.BindPFlag("count", rootCmd.Flags().Lookup("count"))
 	rootCmd.Flags().BoolP("alphanumeric", "a", false, "Use only Alphanumeric charaters (no special symbols)")
 	viper.BindPFlag("alphanumeric", rootCmd.Flags().Lookup("alphanumeric"))
