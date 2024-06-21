@@ -20,13 +20,10 @@ import (
 
 	"os"
 
+	YamlConfig "github.com/Lunal98/pwdgen/internal/config"
 	"github.com/Lunal98/pwdgen/internal/generator"
 	"github.com/spf13/cobra"
-)
-
-var (
-	length    int
-	pwdnumber int
+	"github.com/spf13/viper"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -42,6 +39,10 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
+
+		pwdnumber := viper.GetInt("count")
+
+		length := viper.GetInt("length")
 		for i := 0; i < pwdnumber; i++ {
 			fmt.Println(generator.Generate(length, string(generator.CreateCharacterSet(true, true, true))))
 		}
@@ -66,8 +67,19 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	rootCmd.Flags().IntVarP(&length, "length", "l", 12, "Set the length of password(s)")
-	rootCmd.Flags().IntVarP(&pwdnumber, "count", "c", 1, "Number of passwords to generate")
 
+	YamlConfig.Setup()
+
+	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.Flags().IntP("length", "l", 24, "Set the length of password(s)")
+	viper.BindPFlag("length", rootCmd.Flags().Lookup("length"))
+	rootCmd.Flags().IntP("count", "c", 2, "Number of passwords to generate")
+	viper.BindPFlag("count", rootCmd.Flags().Lookup("count"))
+	/*
+	   rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	   rootCmd.Flags().IntVarP(&length, "length", "l", 12, "Set the length of password(s)")
+	   viper.BindPFlag("length", rootCmd.Flags().Lookup("length"))
+	   rootCmd.Flags().IntVarP(&pwdnumber, "count", "c", 1, "Number of passwords to generate")
+	   viper.BindPFlag("count", rootCmd.Flags().Lookup("count"))
+	*/
 }

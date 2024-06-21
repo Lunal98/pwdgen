@@ -17,11 +17,9 @@ package main
 
 import (
 	"github.com/Lunal98/pwdgen/cmd"
-	YamlConfig "github.com/Lunal98/pwdgen/internal/config"
 )
 
 func main() {
 
-	YamlConfig.Setup()
 	cmd.Execute()
 }
