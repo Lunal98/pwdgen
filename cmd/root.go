@@ -64,12 +64,13 @@ func init() {
 
 	YamlConfig.Setup()
 
-	rootCmd.Flags().IntP("length", "l", 16, "Set the length of password(s)")
+	rootCmd.Flags().IntP("length", "l", 16, "Length of password(s)")
 	viper.BindPFlag("length", rootCmd.Flags().Lookup("length"))
 	rootCmd.Flags().IntP("count", "c", 1, "Number of passwords to generate")
 	viper.BindPFlag("count", rootCmd.Flags().Lookup("count"))
 	rootCmd.Flags().BoolP("alphanumeric", "a", false, "Use only Alphanumeric charaters (no special symbols)")
 	viper.BindPFlag("alphanumeric", rootCmd.Flags().Lookup("alphanumeric"))
+
 	/*
 	   rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	   rootCmd.Flags().IntVarP(&length, "length", "l", 12, "Set the length of password(s)")

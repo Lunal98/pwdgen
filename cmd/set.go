@@ -22,6 +22,8 @@ import (
 )
 
 // setCmd represents the set command
+var count int
+var length int
 var setCmd = &cobra.Command{
 	Use:   "set",
 	Short: "A brief description of your command",
@@ -33,12 +35,19 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("set called")
+		if count > 0 {
+			fmt.Printf("count set to: %d", count)
+		}
+		if length > 0 {
+			fmt.Printf("length set to: %d", length)
+		}
 	},
 }
 
 func init() {
 	configCmd.AddCommand(setCmd)
-
+	setCmd.Flags().IntVarP(&count, "count", "c", -1, "Number of passwords to generate")
+	setCmd.Flags().IntVarP(&length, "length", "l", -1, "Set the length of password(s)")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
