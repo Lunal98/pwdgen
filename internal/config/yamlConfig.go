@@ -16,6 +16,8 @@ limitations under the License.
 package YamlConfig
 
 import (
+	"os"
+
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 )
@@ -35,7 +37,11 @@ func readConfig() {
 			// Config file not found; ignore error if desired
 			log.Warn().Str("config file", viper.ConfigFileUsed()).Msg("no config found, creating config file")
 			//err := viper.WriteConfigAs(fmt.Sprintf("%s%s%s", configpath, delimiter, filename))
-			err := viper.SafeWriteConfig()
+			err := os.MkdirAll(os.ExpandEnv(configpath), os.ModePerm)
+			if err != nil {
+				log.Fatal().Str("configpath", configpath).Err(err).Msg("folder creation failed")
+			}
+			err = viper.SafeWriteConfig()
 			if err != nil {
 				log.Fatal().Err(err).Msg("file creation failed")
 			}
