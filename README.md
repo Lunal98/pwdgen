@@ -10,8 +10,6 @@ The following flags are supported:
 
 ## todo
 
-**config management**
-create cli for changing the parameters in the config file, as well as reading them
 
 **required patterns:**
 set certain patterns that need to be met.

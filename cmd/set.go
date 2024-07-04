@@ -19,6 +19,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // setCmd represents the set command
@@ -33,12 +34,28 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("set called")
+		writeconfig := false
+		if cmd.Flag("count").Changed {
+			count := cmd.Flag("count").Value
+
+			viper.Set("count", count)
+			writeconfig = true
+		}
+		if cmd.Flag("length").Changed {
+			length := cmd.Flag("length").Value
+			viper.Set("length", length)
+			writeconfig = true
+		}
+		if writeconfig {
+			viper.WriteConfig()
+		}
 	},
 }
 
 func init() {
 	configCmd.AddCommand(setCmd)
-
+	setCmd.Flags().IntP("count", "c", 1, "Set the Number of passwords to generate")
+	setCmd.Flags().IntP("length", "l", 16, "Set the length of password(s)")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
