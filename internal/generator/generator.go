@@ -46,7 +46,9 @@ func CreateCharacterSet(uppercase bool, specials bool, numbers bool) []byte {
 	const SpecialsString string = "!@#$%^&*()_+-=[]{}\\|;':\",.<>/?`~"
 	const numbersString string = "0123456789"
 	characterset := lowercaseString
+	characterset += lowercaseString
 	if uppercase {
+		characterset += uppercaseString
 		characterset += uppercaseString
 	}
 	if specials {
@@ -54,6 +56,7 @@ func CreateCharacterSet(uppercase bool, specials bool, numbers bool) []byte {
 	}
 	if numbers {
 		characterset += numbersString
+		characterset += uppercaseString
 	}
 	set := []byte(characterset)
 	return set
